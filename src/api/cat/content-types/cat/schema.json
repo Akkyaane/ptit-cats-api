@@ -1,0 +1,85 @@
+{
+  "kind": "collectionType",
+  "collectionName": "cats",
+  "info": {
+    "singularName": "cat",
+    "pluralName": "cats",
+    "displayName": "Cat"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "sex": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "Male",
+        "Female"
+      ]
+    },
+    "birthdate": {
+      "type": "datetime",
+      "required": false
+    },
+    "isDewormed": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "isVaccinated": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "isSterilizedOrCastrated": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "isIdentified": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "isDogFriendly": {
+      "type": "boolean",
+      "required": false,
+      "default": false
+    },
+    "isCatFriendly": {
+      "type": "boolean",
+      "required": false,
+      "default": false
+    },
+    "isChildFriendly": {
+      "type": "boolean",
+      "default": false
+    },
+    "livingEnvironmentType": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "Apartment",
+        "House",
+        "Other"
+      ]
+    },
+    "keyPoints": {
+      "type": "customField",
+      "customField": "plugin::multi-select.multi-select",
+      "default": "[]",
+      "options": [
+        "Enfants respectueux",
+        "Foyer sans enfant en bas âge",
+        "Foyer avec un chat",
+        "Extérieur sécurisé"
+      ]
+    }
+  }
+}

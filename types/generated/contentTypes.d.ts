@@ -430,6 +430,107 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiAdoptionPostAdoptionPost
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'adoption_posts';
+  info: {
+    displayName: 'AdoptionPost';
+    pluralName: 'adoption-posts';
+    singularName: 'adoption-post';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    cats: Schema.Attribute.Relation<'oneToMany', 'api::cat.cat'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    isDuo: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::adoption-post.adoption-post'
+    > &
+      Schema.Attribute.Private;
+    longDescription: Schema.Attribute.Text & Schema.Attribute.Required;
+    photos: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    > &
+      Schema.Attribute.Required;
+    price: Schema.Attribute.Integer & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    shortDescription: Schema.Attribute.Text;
+    slogan: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiCatCat extends Struct.CollectionTypeSchema {
+  collectionName: 'cats';
+  info: {
+    displayName: 'Cat';
+    pluralName: 'cats';
+    singularName: 'cat';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    birthdate: Schema.Attribute.DateTime;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    isCatFriendly: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    isChildFriendly: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
+    isDewormed: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
+    isDogFriendly: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    isIdentified: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
+    isSterilizedOrCastrated: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
+    isVaccinated: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
+    keyPoints: Schema.Attribute.JSON &
+      Schema.Attribute.CustomField<
+        'plugin::multi-select.multi-select',
+        [
+          'Enfants respectueux',
+          'Foyer sans enfant en bas \u00E2ge',
+          'Foyer avec un chat',
+          'Ext\u00E9rieur s\u00E9curis\u00E9',
+        ]
+      > &
+      Schema.Attribute.DefaultTo<'[]'>;
+    livingEnvironmentType: Schema.Attribute.Enumeration<
+      ['Apartment', 'House', 'Other']
+    > &
+      Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::cat.cat'> &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    sex: Schema.Attribute.Enumeration<['Male', 'Female']> &
+      Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface PluginContentReleasesRelease
   extends Struct.CollectionTypeSchema {
   collectionName: 'strapi_releases';
@@ -941,6 +1042,8 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::adoption-post.adoption-post': ApiAdoptionPostAdoptionPost;
+      'api::cat.cat': ApiCatCat;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;
