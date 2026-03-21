@@ -23,7 +23,7 @@
         "Female"
       ]
     },
-    "birthdate": {
+    "birthDate": {
       "type": "datetime",
       "required": false
     },
@@ -47,19 +47,32 @@
       "required": true,
       "default": false
     },
-    "isDogFriendly": {
-      "type": "boolean",
-      "required": false,
-      "default": false
+    "dogAffinity": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "Yes",
+        "No",
+        "Unknown"
+      ]
     },
-    "isCatFriendly": {
-      "type": "boolean",
-      "required": false,
-      "default": false
+    "catAffinity": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "Yes",
+        "No",
+        "Unknown"
+      ]
     },
-    "isChildFriendly": {
-      "type": "boolean",
-      "default": false
+    "childAffinity": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "Yes",
+        "No",
+        "Unknown"
+      ]
     },
     "livingEnvironmentType": {
       "type": "enumeration",

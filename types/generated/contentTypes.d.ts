@@ -483,17 +483,19 @@ export interface ApiCatCat extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    birthdate: Schema.Attribute.DateTime;
+    birthDate: Schema.Attribute.DateTime;
+    catAffinity: Schema.Attribute.Enumeration<['Yes', 'No', 'Unknown']> &
+      Schema.Attribute.Required;
+    childAffinity: Schema.Attribute.Enumeration<['Yes', 'No', 'Unknown']> &
+      Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    isCatFriendly: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
-    isChildFriendly: Schema.Attribute.Boolean &
-      Schema.Attribute.DefaultTo<false>;
+    dogAffinity: Schema.Attribute.Enumeration<['Yes', 'No', 'Unknown']> &
+      Schema.Attribute.Required;
     isDewormed: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<false>;
-    isDogFriendly: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     isIdentified: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<false>;
