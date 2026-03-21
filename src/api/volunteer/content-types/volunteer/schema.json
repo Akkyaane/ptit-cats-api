@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "volunteers",
+  "info": {
+    "singularName": "volunteer",
+    "pluralName": "volunteers",
+    "displayName": "Volunteer"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "firstName": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "password": {
+      "type": "password"
+    },
+    "role": {
+      "type": "enumeration",
+      "enum": [
+        "Admin",
+        "Référent",
+        "Responsable-adoption"
+      ]
+    }
+  }
+}
