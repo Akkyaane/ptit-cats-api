@@ -430,6 +430,39 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiAdoptantAdoptant extends Struct.CollectionTypeSchema {
+  collectionName: 'adoptants';
+  info: {
+    displayName: 'adoptants';
+    pluralName: 'adoptants';
+    singularName: 'adoptant';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    email: Schema.Attribute.Email;
+    firstName: Schema.Attribute.String;
+    hasGarden: Schema.Attribute.Boolean;
+    housingType: Schema.Attribute.Enumeration<['maison', 'appartement']>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::adoptant.adoptant'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String;
+    password: Schema.Attribute.Password;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiAdoptionPostAdoptionPost
   extends Struct.CollectionTypeSchema {
   collectionName: 'adoption_posts';
@@ -556,7 +589,7 @@ export interface ApiVolunteerVolunteer extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     name: Schema.Attribute.String;
-    password: Schema.Attribute.Password;
+    password: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     role: Schema.Attribute.Enumeration<
       ['Admin', 'R\u00E9f\u00E9rent', 'Responsable-adoption']
@@ -1078,6 +1111,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::adoptant.adoptant': ApiAdoptantAdoptant;
       'api::adoption-post.adoption-post': ApiAdoptionPostAdoptionPost;
       'api::cat.cat': ApiCatCat;
       'api::volunteer.volunteer': ApiVolunteerVolunteer;
