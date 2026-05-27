@@ -1,0 +1,103 @@
+{
+  "kind": "collectionType",
+  "collectionName": "animals",
+  "info": {
+    "singularName": "animal",
+    "pluralName": "animals",
+    "displayName": "Animal"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "sex": {
+      "type": "enumeration",
+      "required": true,
+      "default": "male",
+      "enum": [
+        "male",
+        "female"
+      ]
+    },
+    "birthDate": {
+      "type": "date",
+      "required": false
+    },
+    "isDewormed": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "isVaccinated": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "isSterilizedOrCastrated": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "isIdentified": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "dogAffinity": {
+      "type": "enumeration",
+      "required": true,
+      "default": "unknown",
+      "enum": [
+        "yes",
+        "no",
+        "unknown"
+      ]
+    },
+    "catAffinity": {
+      "type": "enumeration",
+      "required": true,
+      "default": "unknown",
+      "enum": [
+        "yes",
+        "no",
+        "unknown"
+      ]
+    },
+    "childAffinity": {
+      "type": "enumeration",
+      "required": true,
+      "default": "unknown",
+      "enum": [
+        "yes",
+        "no",
+        "unknown"
+      ]
+    },
+    "livingEnvironmentType": {
+      "type": "enumeration",
+      "required": true,
+      "default": "other",
+      "enum": [
+        "apartment",
+        "house",
+        "other"
+      ]
+    },
+    "animal_requirements": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::animal-requirement.animal-requirement"
+    },
+    "adoption_listing": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::adoption-listing.adoption-listing",
+      "inversedBy": "animals"
+    }
+  }
+}

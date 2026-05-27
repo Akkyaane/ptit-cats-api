@@ -1,0 +1,20 @@
+{
+  "kind": "collectionType",
+  "collectionName": "animal_requirements",
+  "info": {
+    "singularName": "animal-requirement",
+    "pluralName": "animal-requirements",
+    "displayName": "AnimalRequirement"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    }
+  }
+}

@@ -463,19 +463,19 @@ export interface ApiAdoptantAdoptant extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiAdoptionPostAdoptionPost
+export interface ApiAdoptionListingAdoptionListing
   extends Struct.CollectionTypeSchema {
-  collectionName: 'adoption_posts';
+  collectionName: 'adoption_listings';
   info: {
-    displayName: 'AdoptionPost';
-    pluralName: 'adoption-posts';
-    singularName: 'adoption-post';
+    displayName: 'AdoptionListing';
+    pluralName: 'adoption-listings';
+    singularName: 'adoption-listing';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    cats: Schema.Attribute.Relation<'oneToMany', 'api::cat.cat'>;
+    animals: Schema.Attribute.Relation<'oneToMany', 'api::animal.animal'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -485,18 +485,15 @@ export interface ApiAdoptionPostAdoptionPost
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
-      'api::adoption-post.adoption-post'
+      'api::adoption-listing.adoption-listing'
     > &
       Schema.Attribute.Private;
     longDescription: Schema.Attribute.Text & Schema.Attribute.Required;
-    photos: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios',
-      true
-    > &
+    media: Schema.Attribute.Media<'images' | 'files' | 'videos', true> &
       Schema.Attribute.Required;
     price: Schema.Attribute.Integer & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
-    shortDescription: Schema.Attribute.Text;
+    shortDescription: Schema.Attribute.String & Schema.Attribute.Required;
     slogan: Schema.Attribute.String;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
@@ -505,27 +502,69 @@ export interface ApiAdoptionPostAdoptionPost
   };
 }
 
-export interface ApiCatCat extends Struct.CollectionTypeSchema {
-  collectionName: 'cats';
+export interface ApiAnimalRequirementAnimalRequirement
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'animal_requirements';
   info: {
-    displayName: 'Cat';
-    pluralName: 'cats';
-    singularName: 'cat';
+    displayName: 'AnimalRequirement';
+    pluralName: 'animal-requirements';
+    singularName: 'animal-requirement';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    birthDate: Schema.Attribute.DateTime;
-    catAffinity: Schema.Attribute.Enumeration<['Yes', 'No', 'Unknown']> &
-      Schema.Attribute.Required;
-    childAffinity: Schema.Attribute.Enumeration<['Yes', 'No', 'Unknown']> &
-      Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    dogAffinity: Schema.Attribute.Enumeration<['Yes', 'No', 'Unknown']> &
-      Schema.Attribute.Required;
+    label: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::animal-requirement.animal-requirement'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiAnimalAnimal extends Struct.CollectionTypeSchema {
+  collectionName: 'animals';
+  info: {
+    displayName: 'Animal';
+    pluralName: 'animals';
+    singularName: 'animal';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    adoption_listing: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::adoption-listing.adoption-listing'
+    >;
+    animal_requirements: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::animal-requirement.animal-requirement'
+    >;
+    birthDate: Schema.Attribute.Date;
+    catAffinity: Schema.Attribute.Enumeration<['yes', 'no', 'unknown']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'unknown'>;
+    childAffinity: Schema.Attribute.Enumeration<['yes', 'no', 'unknown']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'unknown'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    dogAffinity: Schema.Attribute.Enumeration<['yes', 'no', 'unknown']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'unknown'>;
     isDewormed: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<false>;
@@ -538,28 +577,22 @@ export interface ApiCatCat extends Struct.CollectionTypeSchema {
     isVaccinated: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<false>;
-    keyPoints: Schema.Attribute.JSON &
-      Schema.Attribute.CustomField<
-        'plugin::multi-select.multi-select',
-        [
-          'Enfants respectueux',
-          'Foyer sans enfant en bas \u00E2ge',
-          'Foyer avec un chat',
-          'Ext\u00E9rieur s\u00E9curis\u00E9',
-        ]
-      > &
-      Schema.Attribute.DefaultTo<'[]'>;
     livingEnvironmentType: Schema.Attribute.Enumeration<
-      ['Apartment', 'House', 'Other']
+      ['apartment', 'house', 'other']
     > &
-      Schema.Attribute.Required;
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'other'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<'oneToMany', 'api::cat.cat'> &
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::animal.animal'
+    > &
       Schema.Attribute.Private;
     name: Schema.Attribute.String & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
-    sex: Schema.Attribute.Enumeration<['Male', 'Female']> &
-      Schema.Attribute.Required;
+    sex: Schema.Attribute.Enumeration<['male', 'female']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'male'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1112,8 +1145,9 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::adoptant.adoptant': ApiAdoptantAdoptant;
-      'api::adoption-post.adoption-post': ApiAdoptionPostAdoptionPost;
-      'api::cat.cat': ApiCatCat;
+      'api::adoption-listing.adoption-listing': ApiAdoptionListingAdoptionListing;
+      'api::animal-requirement.animal-requirement': ApiAnimalRequirementAnimalRequirement;
+      'api::animal.animal': ApiAnimalAnimal;
       'api::volunteer.volunteer': ApiVolunteerVolunteer;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
