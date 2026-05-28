@@ -565,6 +565,9 @@ export interface ApiAnimalAnimal extends Struct.CollectionTypeSchema {
     dogAffinity: Schema.Attribute.Enumeration<['yes', 'no', 'unknown']> &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'unknown'>;
+    isAtypical: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
     isDewormed: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<false>;

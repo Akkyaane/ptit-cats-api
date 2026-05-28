@@ -88,6 +88,11 @@
         "other"
       ]
     },
+    "isAtypical": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
     "animal_requirements": {
       "type": "relation",
       "relation": "oneToMany",
