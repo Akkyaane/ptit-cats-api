@@ -38,20 +38,18 @@ module.exports = createCoreController('api::adoptant.adoptant', ({ strapi }) => 
     if (email) {
       const { documentId } = ctx.params;
 
-      // Self-exclusion : le filtre $ne sur documentId exclut directement le
-      // document courant côté base de données, ce qui évite tout décalage
-      // entre la valeur de ctx.params.documentId et celle retournée par la
-      // couche Document Service. Si aucun AUTRE adoptant n'a cet email, le
-      // tableau est vide et la mise à jour est autorisée.
-      const duplicates = await strapi.db.query('api::adoptant.adoptant').findMany({
-        where: {
-          email: { $eq: email },
-          document_id: { $ne: documentId },
-        },
-        limit: 1,
+      // Self-exclusion : strapi.documents().findMany() retourne des objets
+      // avec un champ .documentId (camelCase) qui correspond exactement au
+      // paramètre d'URL. La comparaison s'effectue en mémoire sur les valeurs
+      // normalisées par Strapi, sans passer par knex ni chercher une colonne
+      // SQL inexistante (document_id n'est pas exposée dans le querybuilder).
+      const matches = await strapi.documents('api::adoptant.adoptant').findMany({
+        filters: { email: { $eq: email } },
       });
 
-      if (duplicates.length > 0) {
+      const isDuplicate = matches.some((doc) => doc.documentId !== documentId);
+
+      if (isDuplicate) {
         return ctx.badRequest('Un adoptant avec cet email existe déjà.');
       }
     }

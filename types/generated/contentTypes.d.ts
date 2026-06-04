@@ -486,7 +486,6 @@ export interface ApiAdoptantAdoptant extends Struct.CollectionTypeSchema {
     name: Schema.Attribute.String;
     nearBusyRoad: Schema.Attribute.Enumeration<['oui', 'non', 'autre']>;
     otherAnimalsDetails: Schema.Attribute.Text;
-    password: Schema.Attribute.String;
     petCanGoOutside: Schema.Attribute.Enumeration<['oui', 'non', 'autre']>;
     petsSince: Schema.Attribute.String;
     phone: Schema.Attribute.String;
@@ -557,6 +556,44 @@ export interface ApiAdoptionListingAdoptionListing
     shortDescription: Schema.Attribute.String & Schema.Attribute.Required;
     slogan: Schema.Attribute.String;
     title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiAdoptionRequestAdoptionRequest
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'adoption_requests';
+  info: {
+    displayName: 'AdoptionRequest';
+    pluralName: 'adoption-requests';
+    singularName: 'adoption-request';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    adoptant: Schema.Attribute.Relation<'manyToOne', 'api::adoptant.adoptant'>;
+    adoptionListing: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::adoption-listing.adoption-listing'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::adoption-request.adoption-request'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    status: Schema.Attribute.Enumeration<
+      ['en_attente', 'accept\u00E9e', 'refus\u00E9e']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'en_attente'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1294,6 +1331,7 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::adoptant.adoptant': ApiAdoptantAdoptant;
       'api::adoption-listing.adoption-listing': ApiAdoptionListingAdoptionListing;
+      'api::adoption-request.adoption-request': ApiAdoptionRequestAdoptionRequest;
       'api::animal-personality-trait.animal-personality-trait': ApiAnimalPersonalityTraitAnimalPersonalityTrait;
       'api::animal-requirement.animal-requirement': ApiAnimalRequirementAnimalRequirement;
       'api::animal.animal': ApiAnimalAnimal;
