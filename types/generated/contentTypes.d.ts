@@ -433,21 +433,50 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
 export interface ApiAdoptantAdoptant extends Struct.CollectionTypeSchema {
   collectionName: 'adoptants';
   info: {
-    displayName: 'adoptants';
+    displayName: 'Adoptant';
     pluralName: 'adoptants';
     singularName: 'adoptant';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
+    acceptsResponsibility: Schema.Attribute.Boolean;
+    address: Schema.Attribute.String;
+    aloneTime: Schema.Attribute.String;
+    apartmentFloor: Schema.Attribute.Integer;
+    balconySecured: Schema.Attribute.Enumeration<['oui', 'non', 'autre']>;
+    balconySurface: Schema.Attribute.String;
+    birthDate: Schema.Attribute.Date;
+    childrenAges: Schema.Attribute.String;
+    childrenCount: Schema.Attribute.Integer;
+    city: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    email: Schema.Attribute.Email;
+    disagreementDetails: Schema.Attribute.Text;
+    email: Schema.Attribute.Email &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    fenceHeight: Schema.Attribute.String;
     firstName: Schema.Attribute.String;
-    hasGarden: Schema.Attribute.Boolean;
-    housingType: Schema.Attribute.Enumeration<['maison', 'appartement']>;
+    gardenFenced: Schema.Attribute.Enumeration<['oui', 'non', 'autre']>;
+    gardenSurface: Schema.Attribute.String;
+    hasBalconyOrTerrace: Schema.Attribute.Enumeration<['oui', 'non', 'autre']>;
+    hasChildren: Schema.Attribute.Boolean;
+    hasGarden: Schema.Attribute.Enumeration<['oui', 'non', 'autre']>;
+    hasOtherAnimals: Schema.Attribute.Boolean;
+    householdAgreement: Schema.Attribute.Boolean;
+    householdComposition: Schema.Attribute.Enumeration<
+      ['seul', 'couple', 'colocation', 'autre']
+    >;
+    housingSurface: Schema.Attribute.String;
+    housingType: Schema.Attribute.Enumeration<
+      ['appartement', 'maison', 'autre']
+    >;
+    livingEnvironment: Schema.Attribute.Enumeration<
+      ['ville', 'campagne', 'lotissement', 'autre']
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -455,11 +484,31 @@ export interface ApiAdoptantAdoptant extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     name: Schema.Attribute.String;
-    password: Schema.Attribute.Password;
+    nearBusyRoad: Schema.Attribute.Enumeration<['oui', 'non', 'autre']>;
+    otherAnimalsDetails: Schema.Attribute.Text;
+    password: Schema.Attribute.String;
+    petCanGoOutside: Schema.Attribute.Enumeration<['oui', 'non', 'autre']>;
+    petsSince: Schema.Attribute.String;
+    phone: Schema.Attribute.String;
+    planToSecureWindows: Schema.Attribute.Enumeration<['oui', 'non', 'autre']>;
+    postalCode: Schema.Attribute.String;
+    profession: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
+    remarks: Schema.Attribute.Text;
+    roommatesCount: Schema.Attribute.Integer;
+    sterilizedAnimals: Schema.Attribute.Boolean;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    windowsSecured: Schema.Attribute.Enumeration<['oui', 'non', 'autre']>;
+    workingHours: Schema.Attribute.String;
+    workStatus: Schema.Attribute.Enumeration<
+      ['temps-plein', 'temps-partiel', 'teletravail', 'recherche', 'autre']
+    >;
   };
 }
 

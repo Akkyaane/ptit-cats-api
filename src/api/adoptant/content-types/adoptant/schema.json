@@ -4,10 +4,10 @@
   "info": {
     "singularName": "adoptant",
     "pluralName": "adoptants",
-    "displayName": "adoptants"
+    "displayName": "Adoptant"
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
@@ -18,20 +18,192 @@
       "type": "string"
     },
     "email": {
-      "type": "email"
+      "type": "email",
+      "required": true,
+      "unique": true
     },
-    "password": {
-      "type": "password"
+    "birthDate": {
+      "type": "date"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "address": {
+      "type": "string"
+    },
+    "postalCode": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "householdComposition": {
+      "type": "enumeration",
+      "enum": [
+        "seul",
+        "couple",
+        "colocation",
+        "autre"
+      ]
+    },
+    "roommatesCount": {
+      "type": "integer"
+    },
+    "hasChildren": {
+      "type": "boolean"
+    },
+    "childrenCount": {
+      "type": "integer"
+    },
+    "childrenAges": {
+      "type": "string"
+    },
+    "householdAgreement": {
+      "type": "boolean"
+    },
+    "disagreementDetails": {
+      "type": "text"
+    },
+    "workStatus": {
+      "type": "enumeration",
+      "enum": [
+        "temps-plein",
+        "temps-partiel",
+        "teletravail",
+        "recherche",
+        "autre"
+      ]
+    },
+    "profession": {
+      "type": "string"
+    },
+    "workingHours": {
+      "type": "string"
+    },
+    "aloneTime": {
+      "type": "string"
     },
     "housingType": {
       "type": "enumeration",
       "enum": [
+        "appartement",
         "maison",
-        "appartement"
+        "autre"
+      ]
+    },
+    "housingSurface": {
+      "type": "string"
+    },
+    "livingEnvironment": {
+      "type": "enumeration",
+      "enum": [
+        "ville",
+        "campagne",
+        "lotissement",
+        "autre"
+      ]
+    },
+    "nearBusyRoad": {
+      "type": "enumeration",
+      "enum": [
+        "oui",
+        "non",
+        "autre"
+      ]
+    },
+    "petCanGoOutside": {
+      "type": "enumeration",
+      "enum": [
+        "oui",
+        "non",
+        "autre"
+      ]
+    },
+    "apartmentFloor": {
+      "type": "integer"
+    },
+    "windowsSecured": {
+      "type": "enumeration",
+      "enum": [
+        "oui",
+        "non",
+        "autre"
+      ]
+    },
+    "planToSecureWindows": {
+      "type": "enumeration",
+      "enum": [
+        "oui",
+        "non",
+        "autre"
       ]
     },
     "hasGarden": {
+      "type": "enumeration",
+      "enum": [
+        "oui",
+        "non",
+        "autre"
+      ]
+    },
+    "gardenSurface": {
+      "type": "string"
+    },
+    "gardenFenced": {
+      "type": "enumeration",
+      "enum": [
+        "oui",
+        "non",
+        "autre"
+      ]
+    },
+    "fenceHeight": {
+      "type": "string"
+    },
+    "hasBalconyOrTerrace": {
+      "type": "enumeration",
+      "enum": [
+        "oui",
+        "non",
+        "autre"
+      ]
+    },
+    "balconySurface": {
+      "type": "string"
+    },
+    "balconySecured": {
+      "type": "enumeration",
+      "enum": [
+        "oui",
+        "non",
+        "autre"
+      ]
+    },
+    "hasOtherAnimals": {
       "type": "boolean"
+    },
+    "otherAnimalsDetails": {
+      "type": "text"
+    },
+    "sterilizedAnimals": {
+      "type": "boolean"
+    },
+    "petsSince": {
+      "type": "string"
+    },
+    "remarks": {
+      "type": "text"
+    },
+    "acceptsResponsibility": {
+      "type": "boolean"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "password": {
+      "type": "string"
     }
   }
 }
