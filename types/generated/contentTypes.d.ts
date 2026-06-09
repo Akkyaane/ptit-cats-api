@@ -479,6 +479,18 @@ export interface ApiAdoptionListingAdoptionListing
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    entityStatus: Schema.Attribute.Enumeration<
+      [
+        'draft',
+        'published',
+        'adoption pending',
+        'on hold',
+        'adoption completed',
+        'archived',
+      ]
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'draft'>;
     isDuo: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<false>;
@@ -496,6 +508,37 @@ export interface ApiAdoptionListingAdoptionListing
     shortDescription: Schema.Attribute.String & Schema.Attribute.Required;
     slogan: Schema.Attribute.String;
     title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiAnimalPersonalityTraitAnimalPersonalityTrait
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'animal_personality_traits';
+  info: {
+    displayName: 'AnimalPersonalityTrait';
+    pluralName: 'animal-personality-traits';
+    singularName: 'animal-personality-trait';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    label: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::animal-personality-trait.animal-personality-trait'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -548,6 +591,10 @@ export interface ApiAnimalAnimal extends Struct.CollectionTypeSchema {
       'manyToOne',
       'api::adoption-listing.adoption-listing'
     >;
+    animal_personality_traits: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::animal-personality-trait.animal-personality-trait'
+    >;
     animal_requirements: Schema.Attribute.Relation<
       'oneToMany',
       'api::animal-requirement.animal-requirement'
@@ -565,6 +612,11 @@ export interface ApiAnimalAnimal extends Struct.CollectionTypeSchema {
     dogAffinity: Schema.Attribute.Enumeration<['yes', 'no', 'unknown']> &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'unknown'>;
+    entityStatus: Schema.Attribute.Enumeration<
+      ['in shelter', 'in foster care', 'under medical care', 'adopted']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'in shelter'>;
     isAtypical: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<false>;
@@ -1149,6 +1201,7 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::adoptant.adoptant': ApiAdoptantAdoptant;
       'api::adoption-listing.adoption-listing': ApiAdoptionListingAdoptionListing;
+      'api::animal-personality-trait.animal-personality-trait': ApiAnimalPersonalityTraitAnimalPersonalityTrait;
       'api::animal-requirement.animal-requirement': ApiAnimalRequirementAnimalRequirement;
       'api::animal.animal': ApiAnimalAnimal;
       'api::volunteer.volunteer': ApiVolunteerVolunteer;
