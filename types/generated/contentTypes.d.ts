@@ -654,6 +654,50 @@ export interface ApiAnimalAnimal extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
+  collectionName: 'articles';
+  info: {
+    displayName: 'Article';
+    pluralName: 'articles';
+    singularName: 'article';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    category: Schema.Attribute.Enumeration<
+      [
+        'news',
+        'community',
+        'inspiringStories',
+        'goodToKnow',
+        'events',
+        'quizzes',
+        'everydayLife',
+        'PeopleAndStories',
+        'health',
+        'shopping',
+      ]
+    > &
+      Schema.Attribute.Required;
+    content: Schema.Attribute.JSON & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::article.article'
+    > &
+      Schema.Attribute.Private;
+    publicationDate: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiVolunteerVolunteer extends Struct.CollectionTypeSchema {
   collectionName: 'volunteers';
   info: {
@@ -1204,6 +1248,7 @@ declare module '@strapi/strapi' {
       'api::animal-personality-trait.animal-personality-trait': ApiAnimalPersonalityTraitAnimalPersonalityTrait;
       'api::animal-requirement.animal-requirement': ApiAnimalRequirementAnimalRequirement;
       'api::animal.animal': ApiAnimalAnimal;
+      'api::article.article': ApiArticleArticle;
       'api::volunteer.volunteer': ApiVolunteerVolunteer;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "articles",
+  "info": {
+    "singularName": "article",
+    "pluralName": "articles",
+    "displayName": "Article"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "publicationDate": {
+      "type": "datetime",
+      "required": true
+    },
+    "category": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "news",
+        "community",
+        "inspiringStories",
+        "goodToKnow",
+        "events",
+        "quizzes",
+        "everydayLife",
+        "PeopleAndStories",
+        "health",
+        "shopping"
+      ]
+    },
+    "content": {
+      "type": "json",
+      "required": true
+    }
+  }
+}
