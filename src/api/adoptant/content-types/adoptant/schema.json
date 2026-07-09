@@ -21,7 +21,7 @@
       "type": "email"
     },
     "password": {
-      "type": "password"
+       "type": "string"
     },
     "housingType": {
       "type": "enumeration",
