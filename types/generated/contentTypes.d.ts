@@ -486,6 +486,7 @@ export interface ApiAdoptantAdoptant extends Struct.CollectionTypeSchema {
     name: Schema.Attribute.String;
     nearBusyRoad: Schema.Attribute.Enumeration<['oui', 'non', 'autre']>;
     otherAnimalsDetails: Schema.Attribute.Text;
+    password: Schema.Attribute.String;
     petCanGoOutside: Schema.Attribute.Enumeration<['oui', 'non', 'autre']>;
     petsSince: Schema.Attribute.String;
     phone: Schema.Attribute.String;
