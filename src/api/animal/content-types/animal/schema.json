@@ -93,6 +93,11 @@
       "required": true,
       "default": false
     },
+    "animal_personality_traits": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::animal-personality-trait.animal-personality-trait"
+    },
     "animal_requirements": {
       "type": "relation",
       "relation": "oneToMany",
@@ -103,6 +108,17 @@
       "relation": "manyToOne",
       "target": "api::adoption-listing.adoption-listing",
       "inversedBy": "animals"
+    },
+    "entityStatus": {
+      "type": "enumeration",
+      "required": true,
+      "default": "in shelter",
+      "enum": [
+        "in shelter",
+        "in foster care",
+        "under medical care",
+        "adopted"
+      ]
     }
   }
 }

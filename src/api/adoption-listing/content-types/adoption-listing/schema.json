@@ -50,6 +50,19 @@
       "relation": "oneToMany",
       "target": "api::animal.animal",
       "mappedBy": "adoption_listing"
+    },
+    "entityStatus": {
+      "type": "enumeration",
+      "required": true,
+      "default": "draft",
+      "enum": [
+        "draft",
+        "published",
+        "adoption pending",
+        "on hold",
+        "adoption completed",
+        "archived"
+      ]
     }
   }
 }

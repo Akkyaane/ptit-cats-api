@@ -1,0 +1,20 @@
+{
+  "kind": "collectionType",
+  "collectionName": "animal_personality_traits",
+  "info": {
+    "singularName": "animal-personality-trait",
+    "pluralName": "animal-personality-traits",
+    "displayName": "AnimalPersonalityTrait"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    }
+  }
+}

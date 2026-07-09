@@ -433,21 +433,50 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
 export interface ApiAdoptantAdoptant extends Struct.CollectionTypeSchema {
   collectionName: 'adoptants';
   info: {
-    displayName: 'adoptants';
+    displayName: 'Adoptant';
     pluralName: 'adoptants';
     singularName: 'adoptant';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
+    acceptsResponsibility: Schema.Attribute.Boolean;
+    address: Schema.Attribute.String;
+    aloneTime: Schema.Attribute.String;
+    apartmentFloor: Schema.Attribute.Integer;
+    balconySecured: Schema.Attribute.Enumeration<['oui', 'non', 'autre']>;
+    balconySurface: Schema.Attribute.String;
+    birthDate: Schema.Attribute.Date;
+    childrenAges: Schema.Attribute.String;
+    childrenCount: Schema.Attribute.Integer;
+    city: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    email: Schema.Attribute.Email;
+    disagreementDetails: Schema.Attribute.Text;
+    email: Schema.Attribute.Email &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    fenceHeight: Schema.Attribute.String;
     firstName: Schema.Attribute.String;
-    hasGarden: Schema.Attribute.Boolean;
-    housingType: Schema.Attribute.Enumeration<['maison', 'appartement']>;
+    gardenFenced: Schema.Attribute.Enumeration<['oui', 'non', 'autre']>;
+    gardenSurface: Schema.Attribute.String;
+    hasBalconyOrTerrace: Schema.Attribute.Enumeration<['oui', 'non', 'autre']>;
+    hasChildren: Schema.Attribute.Boolean;
+    hasGarden: Schema.Attribute.Enumeration<['oui', 'non', 'autre']>;
+    hasOtherAnimals: Schema.Attribute.Boolean;
+    householdAgreement: Schema.Attribute.Boolean;
+    householdComposition: Schema.Attribute.Enumeration<
+      ['seul', 'couple', 'colocation', 'autre']
+    >;
+    housingSurface: Schema.Attribute.String;
+    housingType: Schema.Attribute.Enumeration<
+      ['appartement', 'maison', 'autre']
+    >;
+    livingEnvironment: Schema.Attribute.Enumeration<
+      ['ville', 'campagne', 'lotissement', 'autre']
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -455,11 +484,30 @@ export interface ApiAdoptantAdoptant extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     name: Schema.Attribute.String;
-    password: Schema.Attribute.Password;
+    nearBusyRoad: Schema.Attribute.Enumeration<['oui', 'non', 'autre']>;
+    otherAnimalsDetails: Schema.Attribute.Text;
+    petCanGoOutside: Schema.Attribute.Enumeration<['oui', 'non', 'autre']>;
+    petsSince: Schema.Attribute.String;
+    phone: Schema.Attribute.String;
+    planToSecureWindows: Schema.Attribute.Enumeration<['oui', 'non', 'autre']>;
+    postalCode: Schema.Attribute.String;
+    profession: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
+    remarks: Schema.Attribute.Text;
+    roommatesCount: Schema.Attribute.Integer;
+    sterilizedAnimals: Schema.Attribute.Boolean;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    windowsSecured: Schema.Attribute.Enumeration<['oui', 'non', 'autre']>;
+    workingHours: Schema.Attribute.String;
+    workStatus: Schema.Attribute.Enumeration<
+      ['temps-plein', 'temps-partiel', 'teletravail', 'recherche', 'autre']
+    >;
   };
 }
 
@@ -479,6 +527,18 @@ export interface ApiAdoptionListingAdoptionListing
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    entityStatus: Schema.Attribute.Enumeration<
+      [
+        'draft',
+        'published',
+        'adoption pending',
+        'on hold',
+        'adoption completed',
+        'archived',
+      ]
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'draft'>;
     isDuo: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<false>;
@@ -496,6 +556,75 @@ export interface ApiAdoptionListingAdoptionListing
     shortDescription: Schema.Attribute.String & Schema.Attribute.Required;
     slogan: Schema.Attribute.String;
     title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiAdoptionRequestAdoptionRequest
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'adoption_requests';
+  info: {
+    displayName: 'AdoptionRequest';
+    pluralName: 'adoption-requests';
+    singularName: 'adoption-request';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    adoptant: Schema.Attribute.Relation<'manyToOne', 'api::adoptant.adoptant'>;
+    adoptionListing: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::adoption-listing.adoption-listing'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::adoption-request.adoption-request'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    status: Schema.Attribute.Enumeration<
+      ['en_attente', 'accept\u00E9e', 'refus\u00E9e']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'en_attente'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiAnimalPersonalityTraitAnimalPersonalityTrait
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'animal_personality_traits';
+  info: {
+    displayName: 'AnimalPersonalityTrait';
+    pluralName: 'animal-personality-traits';
+    singularName: 'animal-personality-trait';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    label: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::animal-personality-trait.animal-personality-trait'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -548,6 +677,10 @@ export interface ApiAnimalAnimal extends Struct.CollectionTypeSchema {
       'manyToOne',
       'api::adoption-listing.adoption-listing'
     >;
+    animal_personality_traits: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::animal-personality-trait.animal-personality-trait'
+    >;
     animal_requirements: Schema.Attribute.Relation<
       'oneToMany',
       'api::animal-requirement.animal-requirement'
@@ -565,6 +698,11 @@ export interface ApiAnimalAnimal extends Struct.CollectionTypeSchema {
     dogAffinity: Schema.Attribute.Enumeration<['yes', 'no', 'unknown']> &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'unknown'>;
+    entityStatus: Schema.Attribute.Enumeration<
+      ['in shelter', 'in foster care', 'under medical care', 'adopted']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'in shelter'>;
     isAtypical: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<false>;
@@ -596,6 +734,50 @@ export interface ApiAnimalAnimal extends Struct.CollectionTypeSchema {
     sex: Schema.Attribute.Enumeration<['male', 'female']> &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'male'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
+  collectionName: 'articles';
+  info: {
+    displayName: 'Article';
+    pluralName: 'articles';
+    singularName: 'article';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    category: Schema.Attribute.Enumeration<
+      [
+        'news',
+        'community',
+        'inspiringStories',
+        'goodToKnow',
+        'events',
+        'quizzes',
+        'everydayLife',
+        'PeopleAndStories',
+        'health',
+        'shopping',
+      ]
+    > &
+      Schema.Attribute.Required;
+    content: Schema.Attribute.JSON & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::article.article'
+    > &
+      Schema.Attribute.Private;
+    publicationDate: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1149,8 +1331,11 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::adoptant.adoptant': ApiAdoptantAdoptant;
       'api::adoption-listing.adoption-listing': ApiAdoptionListingAdoptionListing;
+      'api::adoption-request.adoption-request': ApiAdoptionRequestAdoptionRequest;
+      'api::animal-personality-trait.animal-personality-trait': ApiAnimalPersonalityTraitAnimalPersonalityTrait;
       'api::animal-requirement.animal-requirement': ApiAnimalRequirementAnimalRequirement;
       'api::animal.animal': ApiAnimalAnimal;
+      'api::article.article': ApiArticleArticle;
       'api::volunteer.volunteer': ApiVolunteerVolunteer;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
