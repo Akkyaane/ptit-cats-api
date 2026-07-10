@@ -785,6 +785,41 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiAttendanceAttendance extends Struct.CollectionTypeSchema {
+  collectionName: 'attendances';
+  info: {
+    displayName: 'Attendance';
+    pluralName: 'attendances';
+    singularName: 'attendance';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    date: Schema.Attribute.Date & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::attendance.attendance'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    reason: Schema.Attribute.String;
+    status: Schema.Attribute.Enumeration<['present', 'absent']> &
+      Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    volunteer: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::volunteer.volunteer'
+    >;
+  };
+}
+
 export interface ApiVolunteerVolunteer extends Struct.CollectionTypeSchema {
   collectionName: 'volunteers';
   info: {
@@ -1337,6 +1372,7 @@ declare module '@strapi/strapi' {
       'api::animal-requirement.animal-requirement': ApiAnimalRequirementAnimalRequirement;
       'api::animal.animal': ApiAnimalAnimal;
       'api::article.article': ApiArticleArticle;
+      'api::attendance.attendance': ApiAttendanceAttendance;
       'api::volunteer.volunteer': ApiVolunteerVolunteer;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
