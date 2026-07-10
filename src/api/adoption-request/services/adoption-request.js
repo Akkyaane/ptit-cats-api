@@ -2,4 +2,4 @@
 
 const { createCoreService } = require('@strapi/strapi').factories;
 
-module.exports = createCoreService('api::adoptant.adoptant');
+module.exports = createCoreService('api::adoption-request.adoption-request');
