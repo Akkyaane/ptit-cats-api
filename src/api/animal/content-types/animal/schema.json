@@ -78,7 +78,7 @@
         "unknown"
       ]
     },
-    "livingEnvironmentType": {
+    "housingType": {
       "type": "enumeration",
       "required": true,
       "default": "other",
@@ -92,6 +92,17 @@
       "type": "boolean",
       "required": true,
       "default": false
+    },
+    "entityStatus": {
+      "type": "enumeration",
+      "required": true,
+      "default": "in shelter",
+      "enum": [
+        "in shelter",
+        "in foster care",
+        "under medical care",
+        "adopted"
+      ]
     },
     "animal_personality_traits": {
       "type": "relation",
@@ -108,17 +119,6 @@
       "relation": "manyToOne",
       "target": "api::adoption-listing.adoption-listing",
       "inversedBy": "animals"
-    },
-    "entityStatus": {
-      "type": "enumeration",
-      "required": true,
-      "default": "in shelter",
-      "enum": [
-        "in shelter",
-        "in foster care",
-        "under medical care",
-        "adopted"
-      ]
     }
   }
 }

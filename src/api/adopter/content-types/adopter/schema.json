@@ -1,0 +1,232 @@
+{
+  "kind": "collectionType",
+  "collectionName": "adopters",
+  "info": {
+    "singularName": "adopter",
+    "pluralName": "adopters",
+    "displayName": "Adopter"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "lastName": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 50,
+      "required": true
+    },
+    "firstName": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 50,
+      "required": true
+    },
+    "birthDate": {
+      "type": "date",
+      "required": true
+    },
+    "email": {
+      "type": "email",
+      "required": true,
+      "minLength": 5,
+      "maxLength": 254
+    },
+    "phoneNumber": {
+      "type": "string",
+      "minLength": 7,
+      "maxLength": 20,
+      "required": true
+    },
+    "password": {
+      "type": "password",
+      "required": true,
+      "minLength": 14,
+      "maxLength": 128
+    },
+    "address": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 150,
+      "required": true
+    },
+    "postalCode": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 5,
+      "required": true
+    },
+    "city": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100,
+      "required": true
+    },
+    "employmentStatus": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "full-time",
+        "part-time",
+        "job seeking",
+        "other"
+      ]
+    },
+    "employmentArrangement": {
+      "type": "enumeration",
+      "required": true,
+      "default": "not applicable",
+      "enum": [
+        "on site",
+        "hybrid",
+        "remote",
+        "not applicable"
+      ]
+    },
+    "householdType": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "single",
+        "couple",
+        "family",
+        "shared accommodation",
+        "other"
+      ]
+    },
+    "householdComposition": {
+      "type": "integer",
+      "required": true,
+      "min": 1
+    },
+    "hasChildren": {
+      "type": "boolean",
+      "required": true
+    },
+    "childrenAgeGroup": {
+      "type": "enumeration",
+      "enum": [
+        "young",
+        "old",
+        "both",
+        "not applicable"
+      ]
+    },
+    "householdPresence": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "always",
+        "often",
+        "sometimes",
+        "rarely"
+      ]
+    },
+    "householdAgreement": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "disagreementDetails": {
+      "type": "text",
+      "minLength": 1,
+      "maxLength": 500,
+      "required": true
+    },
+    "housingType": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "apartment",
+        "house",
+        "other"
+      ]
+    },
+    "housingSurface": {
+      "type": "integer",
+      "required": true,
+      "min": 1
+    },
+    "apartmentFloor": {
+      "type": "integer"
+    },
+    "areWindowsSecuredOrWillBe": {
+      "type": "boolean",
+      "required": true
+    },
+    "hasBalconyOrTerrace": {
+      "type": "boolean",
+      "required": true
+    },
+    "isBalconySecured": {
+      "type": "boolean"
+    },
+    "hasGarden": {
+      "type": "boolean",
+      "required": true
+    },
+    "gardenSurface": {
+      "type": "integer"
+    },
+    "fenceHeight": {
+      "type": "integer"
+    },
+    "livingEnvironment": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "urban",
+        "suburban",
+        "rural"
+      ]
+    },
+    "isNearBusyRoad": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "animalCanGoOutside": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "hasOtherAnimals": {
+      "type": "boolean",
+      "required": true
+    },
+    "otherAnimalsDetails": {
+      "type": "text",
+      "minLength": 1,
+      "maxLength": 500
+    },
+    "areOtherAnimalsSterilizedOrCastrated": {
+      "type": "boolean",
+      "required": true
+    },
+    "firstAnimalOwnershipDate": {
+      "type": "date"
+    },
+    "remarks": {
+      "type": "text",
+      "minLength": 1,
+      "maxLength": 500,
+      "required": false
+    },
+    "hasAcceptedResponsibility": {
+      "type": "boolean",
+      "required": true
+    },
+    "adoption_requests": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::adoption-request.adoption-request",
+      "mappedBy": "adopter"
+    },
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    }
+  }
+}

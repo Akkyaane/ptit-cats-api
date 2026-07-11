@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "absences",
+  "info": {
+    "singularName": "absence",
+    "pluralName": "absences",
+    "displayName": "Absence"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "startDate": {
+      "type": "datetime"
+    },
+    "endDate": {
+      "type": "datetime"
+    },
+    "volunteer": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::volunteer.volunteer",
+      "inversedBy": "absences"
+    }
+  }
+}

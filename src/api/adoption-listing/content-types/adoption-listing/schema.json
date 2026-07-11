@@ -45,12 +45,6 @@
       "type": "integer",
       "required": true
     },
-    "animals": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::animal.animal",
-      "mappedBy": "adoption_listing"
-    },
     "entityStatus": {
       "type": "enumeration",
       "required": true,
@@ -63,6 +57,18 @@
         "adoption completed",
         "archived"
       ]
+    },
+    "animals": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::animal.animal",
+      "mappedBy": "adoption_listing"
+    },
+    "adoption_requests": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::adoption-request.adoption-request",
+      "mappedBy": "adoption_listing"
     }
   }
 }
