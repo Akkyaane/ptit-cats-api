@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2026-07-11T16:06:32.636Z"
+    "x-generation-date": "2026-07-17T06:35:28.327Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -7308,7 +7308,6 @@
               "hasChildren",
               "householdPresence",
               "householdAgreement",
-              "disagreementDetails",
               "housingType",
               "housingSurface",
               "areWindowsSecuredOrWillBe",
@@ -7318,7 +7317,6 @@
               "isNearBusyRoad",
               "animalCanGoOutside",
               "hasOtherAnimals",
-              "areOtherAnimalsSterilizedOrCastrated",
               "hasAcceptedResponsibility"
             ],
             "type": "object",
@@ -7577,7 +7575,6 @@
           "hasChildren",
           "householdPresence",
           "householdAgreement",
-          "disagreementDetails",
           "housingType",
           "housingSurface",
           "areWindowsSecuredOrWillBe",
@@ -7587,7 +7584,6 @@
           "isNearBusyRoad",
           "animalCanGoOutside",
           "hasOtherAnimals",
-          "areOtherAnimalsSterilizedOrCastrated",
           "hasAcceptedResponsibility"
         ],
         "properties": {
@@ -9235,12 +9231,8 @@
                     "entityStatus": {
                       "type": "string",
                       "enum": [
-                        "draft",
-                        "published",
                         "adoption pending",
-                        "on hold",
-                        "adoption completed",
-                        "archived"
+                        "adoption completed"
                       ]
                     },
                     "animals": {
@@ -9942,12 +9934,8 @@
               "entityStatus": {
                 "type": "string",
                 "enum": [
-                  "draft",
-                  "published",
                   "adoption pending",
-                  "on hold",
-                  "adoption completed",
-                  "archived"
+                  "adoption completed"
                 ]
               },
               "animals": {
@@ -10893,12 +10881,8 @@
           "entityStatus": {
             "type": "string",
             "enum": [
-              "draft",
-              "published",
               "adoption pending",
-              "on hold",
-              "adoption completed",
-              "archived"
+              "adoption completed"
             ]
           },
           "animals": {
@@ -11393,12 +11377,8 @@
                     "entityStatus": {
                       "type": "string",
                       "enum": [
-                        "draft",
-                        "published",
                         "adoption pending",
-                        "on hold",
-                        "adoption completed",
-                        "archived"
+                        "adoption completed"
                       ]
                     },
                     "animals": {
@@ -13586,12 +13566,8 @@
                         "entityStatus": {
                           "type": "string",
                           "enum": [
-                            "draft",
-                            "published",
                             "adoption pending",
-                            "on hold",
-                            "adoption completed",
-                            "archived"
+                            "adoption completed"
                           ]
                         },
                         "animals": {
@@ -15990,12 +15966,8 @@
               "entityStatus": {
                 "type": "string",
                 "enum": [
-                  "draft",
-                  "published",
                   "adoption pending",
-                  "on hold",
-                  "adoption completed",
-                  "archived"
+                  "adoption completed"
                 ]
               },
               "animals": {

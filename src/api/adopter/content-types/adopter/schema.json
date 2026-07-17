@@ -132,7 +132,7 @@
       "type": "text",
       "minLength": 1,
       "maxLength": 500,
-      "required": true
+      "required": false
     },
     "housingType": {
       "type": "enumeration",
@@ -202,7 +202,7 @@
     },
     "areOtherAnimalsSterilizedOrCastrated": {
       "type": "boolean",
-      "required": true
+      "required": false
     },
     "firstAnimalOwnershipDate": {
       "type": "date"

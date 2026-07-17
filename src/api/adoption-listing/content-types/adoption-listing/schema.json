@@ -48,14 +48,9 @@
     "entityStatus": {
       "type": "enumeration",
       "required": true,
-      "default": "draft",
       "enum": [
-        "draft",
-        "published",
         "adoption pending",
-        "on hold",
-        "adoption completed",
-        "archived"
+        "adoption completed"
       ]
     },
     "animals": {

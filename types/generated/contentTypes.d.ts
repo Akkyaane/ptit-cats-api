@@ -488,8 +488,7 @@ export interface ApiAdopterAdopter extends Struct.CollectionTypeSchema {
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<false>;
     apartmentFloor: Schema.Attribute.Integer;
-    areOtherAnimalsSterilizedOrCastrated: Schema.Attribute.Boolean &
-      Schema.Attribute.Required;
+    areOtherAnimalsSterilizedOrCastrated: Schema.Attribute.Boolean;
     areWindowsSecuredOrWillBe: Schema.Attribute.Boolean &
       Schema.Attribute.Required;
     birthDate: Schema.Attribute.Date & Schema.Attribute.Required;
@@ -506,7 +505,6 @@ export interface ApiAdopterAdopter extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     disagreementDetails: Schema.Attribute.Text &
-      Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 500;
         minLength: 1;
@@ -650,17 +648,9 @@ export interface ApiAdoptionListingAdoptionListing
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     entityStatus: Schema.Attribute.Enumeration<
-      [
-        'draft',
-        'published',
-        'adoption pending',
-        'on hold',
-        'adoption completed',
-        'archived',
-      ]
+      ['adoption pending', 'adoption completed']
     > &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'draft'>;
+      Schema.Attribute.Required;
     isDuo: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<false>;
