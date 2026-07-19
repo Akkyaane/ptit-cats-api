@@ -60,6 +60,12 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "plugin::users-permissions.user"
+    },
+    "adoption_requests": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::adoption-request.adoption-request",
+      "mappedBy": "volunteer"
     }
   }
 }

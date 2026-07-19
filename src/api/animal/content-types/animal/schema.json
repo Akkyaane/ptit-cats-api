@@ -100,8 +100,7 @@
       "enum": [
         "in shelter",
         "in foster care",
-        "under medical care",
-        "adopted"
+        "under medical care"
       ]
     },
     "animal_personality_traits": {

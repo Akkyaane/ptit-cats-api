@@ -15,15 +15,28 @@
       "type": "enumeration",
       "required": true,
       "enum": [
-        "on hold",
-        "accepted",
-        "refused"
+        "to be processed",
+        "pending",
+        "refused",
+        "done"
       ]
+    },
+    "remarks": {
+      "type": "text"
+    },
+    "transferredBy": {
+      "type": "string"
     },
     "adopter": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::adopter.adopter",
+      "inversedBy": "adoption_requests"
+    },
+    "volunteer": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::volunteer.volunteer",
       "inversedBy": "adoption_requests"
     },
     "adoption_listing": {

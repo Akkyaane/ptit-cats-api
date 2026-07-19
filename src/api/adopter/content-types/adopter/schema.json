@@ -109,8 +109,7 @@
       "enum": [
         "young",
         "old",
-        "both",
-        "not applicable"
+        "both"
       ]
     },
     "householdPresence": {

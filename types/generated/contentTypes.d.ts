@@ -492,9 +492,7 @@ export interface ApiAdopterAdopter extends Struct.CollectionTypeSchema {
     areWindowsSecuredOrWillBe: Schema.Attribute.Boolean &
       Schema.Attribute.Required;
     birthDate: Schema.Attribute.Date & Schema.Attribute.Required;
-    childrenAgeGroup: Schema.Attribute.Enumeration<
-      ['young', 'old', 'both', 'not applicable']
-    >;
+    childrenAgeGroup: Schema.Attribute.Enumeration<['young', 'old', 'both']>;
     city: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
@@ -695,7 +693,7 @@ export interface ApiAdoptionRequestAdoptionRequest
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     entityStatus: Schema.Attribute.Enumeration<
-      ['on hold', 'accepted', 'refused']
+      ['to be processed', 'pending', 'refused', 'done']
     > &
       Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
@@ -705,9 +703,15 @@ export interface ApiAdoptionRequestAdoptionRequest
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    remarks: Schema.Attribute.Text;
+    transferredBy: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    volunteer: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::volunteer.volunteer'
+    >;
   };
 }
 
@@ -818,7 +822,7 @@ export interface ApiAnimalAnimal extends Struct.CollectionTypeSchema {
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'unknown'>;
     entityStatus: Schema.Attribute.Enumeration<
-      ['in shelter', 'in foster care', 'under medical care', 'adopted']
+      ['in shelter', 'in foster care', 'under medical care']
     > &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'in shelter'>;
@@ -917,6 +921,10 @@ export interface ApiVolunteerVolunteer extends Struct.CollectionTypeSchema {
   };
   attributes: {
     absences: Schema.Attribute.Relation<'oneToMany', 'api::absence.absence'>;
+    adoption_requests: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::adoption-request.adoption-request'
+    >;
     articles: Schema.Attribute.Relation<'oneToMany', 'api::article.article'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
