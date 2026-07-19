@@ -1,5 +1,5 @@
 module.exports = () => ({
   documentation: {
-    enabled: false,
+    enabled: true,
   },
 });

@@ -430,84 +430,197 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiAdoptantAdoptant extends Struct.CollectionTypeSchema {
-  collectionName: 'adoptants';
+export interface ApiAbsenceAbsence extends Struct.CollectionTypeSchema {
+  collectionName: 'absences';
   info: {
-    displayName: 'Adoptant';
-    pluralName: 'adoptants';
-    singularName: 'adoptant';
+    displayName: 'Absence';
+    pluralName: 'absences';
+    singularName: 'absence';
   };
   options: {
-    draftAndPublish: false;
+    draftAndPublish: true;
   };
   attributes: {
-    acceptsResponsibility: Schema.Attribute.Boolean;
-    address: Schema.Attribute.String;
-    aloneTime: Schema.Attribute.String;
-    apartmentFloor: Schema.Attribute.Integer;
-    balconySecured: Schema.Attribute.Enumeration<['oui', 'non', 'autre']>;
-    balconySurface: Schema.Attribute.String;
-    birthDate: Schema.Attribute.Date;
-    childrenAges: Schema.Attribute.String;
-    childrenCount: Schema.Attribute.Integer;
-    city: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    disagreementDetails: Schema.Attribute.Text;
-    email: Schema.Attribute.Email &
-      Schema.Attribute.Required &
-      Schema.Attribute.Unique;
-    fenceHeight: Schema.Attribute.String;
-    firstName: Schema.Attribute.String;
-    gardenFenced: Schema.Attribute.Enumeration<['oui', 'non', 'autre']>;
-    gardenSurface: Schema.Attribute.String;
-    hasBalconyOrTerrace: Schema.Attribute.Enumeration<['oui', 'non', 'autre']>;
-    hasChildren: Schema.Attribute.Boolean;
-    hasGarden: Schema.Attribute.Enumeration<['oui', 'non', 'autre']>;
-    hasOtherAnimals: Schema.Attribute.Boolean;
-    householdAgreement: Schema.Attribute.Boolean;
-    householdComposition: Schema.Attribute.Enumeration<
-      ['seul', 'couple', 'colocation', 'autre']
-    >;
-    housingSurface: Schema.Attribute.String;
-    housingType: Schema.Attribute.Enumeration<
-      ['appartement', 'maison', 'autre']
-    >;
-    livingEnvironment: Schema.Attribute.Enumeration<
-      ['ville', 'campagne', 'lotissement', 'autre']
-    >;
+    endDate: Schema.Attribute.DateTime;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
-      'api::adoptant.adoptant'
+      'api::absence.absence'
     > &
       Schema.Attribute.Private;
-    name: Schema.Attribute.String;
-    nearBusyRoad: Schema.Attribute.Enumeration<['oui', 'non', 'autre']>;
-    otherAnimalsDetails: Schema.Attribute.Text;
-    password: Schema.Attribute.String;
-    petCanGoOutside: Schema.Attribute.Enumeration<['oui', 'non', 'autre']>;
-    petsSince: Schema.Attribute.String;
-    phone: Schema.Attribute.String;
-    planToSecureWindows: Schema.Attribute.Enumeration<['oui', 'non', 'autre']>;
-    postalCode: Schema.Attribute.String;
-    profession: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
-    remarks: Schema.Attribute.Text;
-    roommatesCount: Schema.Attribute.Integer;
-    sterilizedAnimals: Schema.Attribute.Boolean;
+    startDate: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    user: Schema.Attribute.Relation<
+    volunteer: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::volunteer.volunteer'
+    >;
+  };
+}
+
+export interface ApiAdopterAdopter extends Struct.CollectionTypeSchema {
+  collectionName: 'adopters';
+  info: {
+    displayName: 'Adopter';
+    pluralName: 'adopters';
+    singularName: 'adopter';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    address: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 150;
+        minLength: 1;
+      }>;
+    adoption_requests: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::adoption-request.adoption-request'
+    >;
+    animalCanGoOutside: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
+    apartmentFloor: Schema.Attribute.Integer;
+    areOtherAnimalsSterilizedOrCastrated: Schema.Attribute.Boolean;
+    areWindowsSecuredOrWillBe: Schema.Attribute.Boolean &
+      Schema.Attribute.Required;
+    birthDate: Schema.Attribute.Date & Schema.Attribute.Required;
+    childrenAgeGroup: Schema.Attribute.Enumeration<['young', 'old', 'both']>;
+    city: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+        minLength: 1;
+      }>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    disagreementDetails: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 500;
+        minLength: 1;
+      }>;
+    email: Schema.Attribute.Email &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 254;
+        minLength: 5;
+      }>;
+    employmentArrangement: Schema.Attribute.Enumeration<
+      ['on site', 'hybrid', 'remote', 'not applicable']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'not applicable'>;
+    employmentStatus: Schema.Attribute.Enumeration<
+      ['full-time', 'part-time', 'job seeking', 'other']
+    > &
+      Schema.Attribute.Required;
+    fenceHeight: Schema.Attribute.Integer;
+    firstAnimalOwnershipDate: Schema.Attribute.Date;
+    firstName: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 50;
+        minLength: 1;
+      }>;
+    gardenSurface: Schema.Attribute.Integer;
+    hasAcceptedResponsibility: Schema.Attribute.Boolean &
+      Schema.Attribute.Required;
+    hasBalconyOrTerrace: Schema.Attribute.Boolean & Schema.Attribute.Required;
+    hasChildren: Schema.Attribute.Boolean & Schema.Attribute.Required;
+    hasGarden: Schema.Attribute.Boolean & Schema.Attribute.Required;
+    hasOtherAnimals: Schema.Attribute.Boolean & Schema.Attribute.Required;
+    householdAgreement: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
+    householdComposition: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      >;
+    householdPresence: Schema.Attribute.Enumeration<
+      ['always', 'often', 'sometimes', 'rarely']
+    > &
+      Schema.Attribute.Required;
+    householdType: Schema.Attribute.Enumeration<
+      ['single', 'couple', 'family', 'shared accommodation', 'other']
+    > &
+      Schema.Attribute.Required;
+    housingSurface: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      >;
+    housingType: Schema.Attribute.Enumeration<['apartment', 'house', 'other']> &
+      Schema.Attribute.Required;
+    isBalconySecured: Schema.Attribute.Boolean;
+    isNearBusyRoad: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
+    lastName: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 50;
+        minLength: 1;
+      }>;
+    livingEnvironment: Schema.Attribute.Enumeration<
+      ['urban', 'suburban', 'rural']
+    > &
+      Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::adopter.adopter'
+    > &
+      Schema.Attribute.Private;
+    otherAnimalsDetails: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 500;
+        minLength: 1;
+      }>;
+    password: Schema.Attribute.Password &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 128;
+        minLength: 14;
+      }>;
+    phoneNumber: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 20;
+        minLength: 7;
+      }>;
+    postalCode: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 5;
+        minLength: 5;
+      }>;
+    publishedAt: Schema.Attribute.DateTime;
+    remarks: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 500;
+        minLength: 1;
+      }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    users_permissions_user: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::users-permissions.user'
-    >;
-    windowsSecured: Schema.Attribute.Enumeration<['oui', 'non', 'autre']>;
-    workingHours: Schema.Attribute.String;
-    workStatus: Schema.Attribute.Enumeration<
-      ['temps-plein', 'temps-partiel', 'teletravail', 'recherche', 'autre']
     >;
   };
 }
@@ -524,22 +637,18 @@ export interface ApiAdoptionListingAdoptionListing
     draftAndPublish: true;
   };
   attributes: {
+    adoption_requests: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::adoption-request.adoption-request'
+    >;
     animals: Schema.Attribute.Relation<'oneToMany', 'api::animal.animal'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     entityStatus: Schema.Attribute.Enumeration<
-      [
-        'draft',
-        'published',
-        'adoption pending',
-        'on hold',
-        'adoption completed',
-        'archived',
-      ]
+      ['adoption pending', 'adoption completed']
     > &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'draft'>;
+      Schema.Attribute.Required;
     isDuo: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<false>;
@@ -575,14 +684,18 @@ export interface ApiAdoptionRequestAdoptionRequest
     draftAndPublish: false;
   };
   attributes: {
-    adoptant: Schema.Attribute.Relation<'manyToOne', 'api::adoptant.adoptant'>;
-    adoptionListing: Schema.Attribute.Relation<
+    adopter: Schema.Attribute.Relation<'manyToOne', 'api::adopter.adopter'>;
+    adoption_listing: Schema.Attribute.Relation<
       'manyToOne',
       'api::adoption-listing.adoption-listing'
     >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    entityStatus: Schema.Attribute.Enumeration<
+      ['to be processed', 'pending', 'refused', 'done']
+    > &
+      Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -590,14 +703,15 @@ export interface ApiAdoptionRequestAdoptionRequest
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    status: Schema.Attribute.Enumeration<
-      ['en_attente', 'accept\u00E9e', 'refus\u00E9e']
-    > &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'en_attente'>;
+    remarks: Schema.Attribute.Text;
+    transferredBy: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    volunteer: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::volunteer.volunteer'
+    >;
   };
 }
 
@@ -618,7 +732,11 @@ export interface ApiAnimalPersonalityTraitAnimalPersonalityTrait
       Schema.Attribute.Private;
     label: Schema.Attribute.String &
       Schema.Attribute.Required &
-      Schema.Attribute.Unique;
+      Schema.Attribute.Unique &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 50;
+        minLength: 1;
+      }>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -649,7 +767,11 @@ export interface ApiAnimalRequirementAnimalRequirement
       Schema.Attribute.Private;
     label: Schema.Attribute.String &
       Schema.Attribute.Required &
-      Schema.Attribute.Unique;
+      Schema.Attribute.Unique &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 50;
+        minLength: 1;
+      }>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -700,10 +822,13 @@ export interface ApiAnimalAnimal extends Struct.CollectionTypeSchema {
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'unknown'>;
     entityStatus: Schema.Attribute.Enumeration<
-      ['in shelter', 'in foster care', 'under medical care', 'adopted']
+      ['in shelter', 'in foster care', 'under medical care']
     > &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'in shelter'>;
+    housingType: Schema.Attribute.Enumeration<['apartment', 'house', 'other']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'other'>;
     isAtypical: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<false>;
@@ -719,11 +844,6 @@ export interface ApiAnimalAnimal extends Struct.CollectionTypeSchema {
     isVaccinated: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<false>;
-    livingEnvironmentType: Schema.Attribute.Enumeration<
-      ['apartment', 'house', 'other']
-    > &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'other'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -782,37 +902,6 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-  };
-}
-
-export interface ApiAttendanceAttendance extends Struct.CollectionTypeSchema {
-  collectionName: 'attendances';
-  info: {
-    displayName: 'Attendance';
-    pluralName: 'attendances';
-    singularName: 'attendance';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    date: Schema.Attribute.Date & Schema.Attribute.Required;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::attendance.attendance'
-    > &
-      Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
-    reason: Schema.Attribute.String;
-    status: Schema.Attribute.Enumeration<['present', 'absent']> &
-      Schema.Attribute.Required;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
     volunteer: Schema.Attribute.Relation<
       'manyToOne',
       'api::volunteer.volunteer'
@@ -831,26 +920,55 @@ export interface ApiVolunteerVolunteer extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    absences: Schema.Attribute.Relation<'oneToMany', 'api::absence.absence'>;
+    adoption_requests: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::adoption-request.adoption-request'
+    >;
+    articles: Schema.Attribute.Relation<'oneToMany', 'api::article.article'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    email: Schema.Attribute.Email;
-    firstName: Schema.Attribute.String;
+    email: Schema.Attribute.Email &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 254;
+        minLength: 5;
+      }>;
+    firstName: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 50;
+        minLength: 1;
+      }>;
+    lastName: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 50;
+        minLength: 1;
+      }>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::volunteer.volunteer'
     > &
       Schema.Attribute.Private;
-    name: Schema.Attribute.String;
-    password: Schema.Attribute.String;
+    password: Schema.Attribute.Password &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 128;
+        minLength: 14;
+      }>;
     publishedAt: Schema.Attribute.DateTime;
-    role: Schema.Attribute.Enumeration<
-      ['Admin', 'R\u00E9f\u00E9rent', 'Responsable-adoption']
-    >;
+    role: Schema.Attribute.Enumeration<['admin', 'manager', 'referent']> &
+      Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    users_permissions_user: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
   };
 }
 
@@ -1310,7 +1428,6 @@ export interface PluginUsersPermissionsUser
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
     blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
@@ -1365,14 +1482,14 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
-      'api::adoptant.adoptant': ApiAdoptantAdoptant;
+      'api::absence.absence': ApiAbsenceAbsence;
+      'api::adopter.adopter': ApiAdopterAdopter;
       'api::adoption-listing.adoption-listing': ApiAdoptionListingAdoptionListing;
       'api::adoption-request.adoption-request': ApiAdoptionRequestAdoptionRequest;
       'api::animal-personality-trait.animal-personality-trait': ApiAnimalPersonalityTraitAnimalPersonalityTrait;
       'api::animal-requirement.animal-requirement': ApiAnimalRequirementAnimalRequirement;
       'api::animal.animal': ApiAnimalAnimal;
       'api::article.article': ApiArticleArticle;
-      'api::attendance.attendance': ApiAttendanceAttendance;
       'api::volunteer.volunteer': ApiVolunteerVolunteer;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

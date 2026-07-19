@@ -45,24 +45,25 @@
       "type": "integer",
       "required": true
     },
+    "entityStatus": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "adoption pending",
+        "adoption completed"
+      ]
+    },
     "animals": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::animal.animal",
       "mappedBy": "adoption_listing"
     },
-    "entityStatus": {
-      "type": "enumeration",
-      "required": true,
-      "default": "draft",
-      "enum": [
-        "draft",
-        "published",
-        "adoption pending",
-        "on hold",
-        "adoption completed",
-        "archived"
-      ]
+    "adoption_requests": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::adoption-request.adoption-request",
+      "mappedBy": "adoption_listing"
     }
   }
 }

@@ -11,25 +11,39 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "status": {
+    "entityStatus": {
       "type": "enumeration",
+      "required": true,
       "enum": [
-        "en_attente",
-        "acceptée",
-        "refusée"
-      ],
-      "default": "en_attente",
-      "required": true
+        "to be processed",
+        "pending",
+        "refused",
+        "done"
+      ]
     },
-    "adoptant": {
+    "remarks": {
+      "type": "text"
+    },
+    "transferredBy": {
+      "type": "string"
+    },
+    "adopter": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "api::adoptant.adoptant"
+      "target": "api::adopter.adopter",
+      "inversedBy": "adoption_requests"
     },
-    "adoptionListing": {
+    "volunteer": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "api::adoption-listing.adoption-listing"
+      "target": "api::volunteer.volunteer",
+      "inversedBy": "adoption_requests"
+    },
+    "adoption_listing": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::adoption-listing.adoption-listing",
+      "inversedBy": "adoption_requests"
     }
   }
 }

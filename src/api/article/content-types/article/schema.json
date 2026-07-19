@@ -34,6 +34,12 @@
     "content": {
       "type": "json",
       "required": true
+    },
+    "volunteer": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::volunteer.volunteer",
+      "inversedBy": "articles"
     }
   }
 }
